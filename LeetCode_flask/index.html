@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>LeetCode Problem List</title>
+</head>
+<body>
+    <div class="container">
+        <h1>LeetCode Problem List</h1>
+        <ul>
+            {% for problem_id, problem in problems.items() %}
+            <li>
+                <a href="{{ url_for('show_problem', problem_id=problem_id) }}">{{ problem['title'] }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

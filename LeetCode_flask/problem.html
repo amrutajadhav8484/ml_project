@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>{{ problem['title'] }}</title>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ problem['title'] }}</h1>
+        <p><strong>Difficulty:</strong> {{ problem['difficulty'] }}</p>
+        <p>{{ problem['description'] }}</p>
+        <p><strong>Example:</strong></p>
+        <pre>{{ problem['example'] }}</pre>
+
+        <h2>Submit Your Solution:</h2>
+        <form method="POST" action="/submit_solution/{{ problem_id }}">
+            <textarea name="solution" placeholder="Write your solution here in Python"></textarea><br>
+            <input type="submit" value="Submit Solution">
+        </form>
+
+        <h2>Solution:</h2>
+        <button onclick="loadSolution()">Show Solution</button>
+        <pre id="solution" style="display:none;"></pre>
+
+        <a href="/">Back to Problem List</a>
+    </div>
+
+    <script>
+        function loadSolution() {
+            const solutionElement = document.getElementById('solution');
+            if (solutionElement.style.display === 'none') {
+                fetch(`/solution/{{ problem_id }}`)
+                .then(response => response.json())
+                .then(data => {
+                    solutionElement.textContent = data.solution;
+                    solutionElement.style.display = 'block';
+                });
+            }
+        }
+    </script>
+</body>
+</html>
